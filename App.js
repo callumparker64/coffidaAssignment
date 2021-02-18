@@ -8,8 +8,9 @@
 
 import * as React from 'react';
 
-import App from './src/componets/navigation/loginnav';
+import Appnav from './src/components/navigation/loginnav';
+import Appmainnav from './src/components/navigation/mainnav';
 
 export default function App(){
-    return <App />
+    return <Appnav />
 }

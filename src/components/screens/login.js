@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, Button } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
 class Login extends Component{
 
     constructor(props) {
         super(props);
         this.state = {
-          username = '',
-          password = ''
+          email: '',
+          password: ''
         };
       }
 
@@ -31,8 +32,14 @@ class Login extends Component{
             </TextInput>
 
             <Button 
-                onPress={this.loginAlert}
                 title="Log In"
+                onPress = {() => this.props.navigation.navigate('Main')}
+                
+            />
+            <Button 
+                title="Sign Up"
+                onPress = {() => this.props.navigation.navigate('SignUp')}
+                
             />
         </View>
     );

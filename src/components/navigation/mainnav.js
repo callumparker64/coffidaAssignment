@@ -19,10 +19,7 @@ class MainNav extends Component
        return (
            
       <NavigationContainer>
-          <Stack.Navigator          screenOptions={{
-              headerShown: false
-              }}>
-
+          <Stack.Navigator>
               <Stack.Screen name = "HomeScreen" component = {Homescreen} /> 
               <Stack.Screen name = "MainScreen" component = {Mainscreen} />
               <Stack.Screen name = "TestScreen" component = {Testscreen} />
