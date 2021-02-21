@@ -1,13 +1,15 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Homescreen from './components/homescreen';
-import Testscreen from './components/testscreen';
-import Mainscreen from './components/mainscreen';
+import Main from '../screens/main.js';
+import MyReviews from '../screens/myreviews.js';
+import Reviews from '../screens/reviews.js';
+import Profile from '../screens/profile.js';
 
-const Stack = createStackNavigator();
+
+const Tab = createBottomTabNavigator();
 
 class MainNav extends Component
 {
@@ -16,15 +18,14 @@ class MainNav extends Component
 
 
         
-       return (
-           
-      <NavigationContainer>
-          <Stack.Navigator>
-              <Stack.Screen name = "HomeScreen" component = {Homescreen} /> 
-              <Stack.Screen name = "MainScreen" component = {Mainscreen} />
-              <Stack.Screen name = "TestScreen" component = {Testscreen} />
-          </Stack.Navigator>
-      </NavigationContainer>
+    return (
+
+          <Tab.Navigator>
+              <Tab.Screen name = "Main" component = {Main} /> 
+              <Tab.Screen name = "MyReviews" component = {MyReviews} />
+              <Tab.Screen name = "Reviews" component = {Reviews} />
+              <Tab.Screen name = "Profile" component = {Profile} />
+          </Tab.Navigator>
     );  
     }
    

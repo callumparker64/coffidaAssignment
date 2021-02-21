@@ -12,6 +12,28 @@ class Login extends Component{
         };
       }
 
+      loginUser(){
+        let to_send = {
+          email: this.state.email,
+          password: this.state.password
+
+        };
+
+        return fetch("http://10.0.2.2:3333/user/login",
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(to_send)
+        })
+        .then((response) => {
+          Alert.alert("Logged in!");
+          this.props.navigation.navigate('Main')
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+
 
 
   render(){
@@ -34,6 +56,7 @@ class Login extends Component{
             <Button 
                 title="Log In"
                 onPress = {() => this.props.navigation.navigate('Main')}
+                // onPress = {() => this.loginUser()}
                 
             />
             <Button 

@@ -11,13 +11,28 @@ class Main extends Component{
         };
       }
 
+      logoutUser(){
 
+        return fetch("http://10.0.2.2:3333/user/logout",
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then((response) => {
+          Alert.alert("You have been logged out");
+          this.props.navigation.navigate('Login')
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
 
   render(){
 
     
     return(
         <View>
+            <Text>Main Screen!</Text>
             <TextInput 
                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                 onChangeText={(email) => this.setState({email})}
@@ -33,6 +48,10 @@ class Main extends Component{
             <Button 
                 onPress={() => this.props.navigation.goBack()}
                 title="Go Back"
+            />
+            <Button 
+                onPress={() => this.logoutUser()}
+                title="Logout"
             />
         </View>
     );

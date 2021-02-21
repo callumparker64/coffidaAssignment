@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../screens/login.js';
 import SignUp from '../screens/signup.js';
 import Main from '../screens/main.js';
+import MainNav from '../navigation/mainnav.js'
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,7 @@ class LoginNav extends Component
           <Stack.Navigator>
               <Stack.Screen name = "Login" component = {Login} /> 
               <Stack.Screen name = "SignUp" component = {SignUp} />
-              <Stack.Screen name = "Main" component = {Main}/>
+              <Stack.Screen name = "Main" component = {MainNav}/>
           </Stack.Navigator>
       </NavigationContainer>
     );  
