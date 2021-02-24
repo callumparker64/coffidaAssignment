@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, Button } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { Alert } from 'react-native';
 
 class Profile extends Component{
 
     constructor(props) {
         super(props);
         this.state = {
-          fname: '',
-          lname: '',
+          first_name: '',
+          last_name: '',
           email: '',
           password: '',
           id: ''
@@ -36,8 +37,8 @@ class Profile extends Component{
 
       updateProfile(){
         let to_send = {
-          fname: this.state.fname,
-          lname: this.state.lname,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
           email: this.state.email,
           password: this.state.password
 
@@ -66,15 +67,15 @@ class Profile extends Component{
 
             <TextInput 
                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(fname) => this.setState({fname})}
-                value={this.state.fname}
-                defaultValue ={this.state.fname}> 
+                onChangeText={(first_name) => this.setState({first_name})}
+                value={this.state.first_name}
+                defaultValue ={this.state.first_name}> 
             </TextInput>
 
             <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(lname) => this.setState({lname})}
-                value={this.state.lname}
-                defaultValue ={this.state.lname}> 
+                onChangeText={(last_name) => this.setState({last_name})}
+                value={this.state.last_name}
+                defaultValue ={this.state.last_name}> 
             </TextInput>
             <TextInput 
                 style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
