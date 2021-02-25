@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Alert } from 'react-native';
+import { Text, View, Button, Alert,AsyncStorage } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 class Login extends Component{
@@ -12,7 +12,38 @@ class Login extends Component{
         };
       }
 
-      loginUser(){
+      // loginUser(){
+      //   let to_send = {
+      //     email: this.state.email,
+      //     password: this.state.password
+
+      //   };
+
+      //   return fetch("http://10.0.2.2:3333/api/1.0.0/user/login",
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify(to_send)
+      //   })
+      //   .then((response) => {
+      //     if(response.status === 200)
+      //     {
+      //       Alert.alert("Logged in!");
+      //     this.props.navigation.navigate('Main')
+      //     }
+      //     else{
+      //       Alert.alert("Error");
+      //     }
+          
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
+      // }
+
+      loginAsync = async() =>
+      {
+
         let to_send = {
           email: this.state.email,
           password: this.state.password
@@ -28,13 +59,21 @@ class Login extends Component{
         .then((response) => {
           if(response.status === 200)
           {
-            Alert.alert("Logged in!");
-          this.props.navigation.navigate('Main')
+            return response.json()
           }
-          else{
-            Alert.alert("Error");
+          else if(response.status === 400){
+            throw 'Invalid email or password';
+          }
+          else
+          {
+            throw 'error';
           }
           
+        })
+        .then(async (responseJson) => {
+          console.log(responseJson);
+          await AsyncStorage.setItem('@session_token', responseJson.token);
+          this.props.navigation.navigate('Main')
         })
         .catch((error) => {
           console.error(error);
@@ -65,8 +104,7 @@ class Login extends Component{
 
             <Button 
                 title="Log In"
-                //onPress = {() => this.props.navigation.navigate('Main')}
-                onPress = {() => this.loginUser()}
+                onPress = {() => this.loginAsync()}
                 
             />
             <Button 

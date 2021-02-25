@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button,AsyncStorage } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 class Main extends Component{
 
@@ -25,6 +25,28 @@ class Main extends Component{
         .catch((error) => {
           console.error(error);
         });
+      }
+
+
+      logoutUser = async () =>
+      {
+        let token = await AsyncStorage.getItem('@session_token');
+        await AsyncStorage.removeItem('@session_token');
+        return fetch("http://10.0.2.2:3333/api/1.0.0/user/logout",
+        {
+          method: 'POST',
+          headers: { "X-Authorization": token}
+        })
+        .then((response) => {
+          if(response.status === 200)
+          {
+            this.props.navigation.navigate('Login');
+          }
+          else
+          {
+            throw 'error';
+          }
+        })
       }
 
   render(){
