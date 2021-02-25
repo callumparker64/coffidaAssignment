@@ -11,27 +11,28 @@ class Main extends Component{
         };
       }
 
-      logoutUser(){
+      // logoutUser(){
 
-        return fetch("http://10.0.2.2:3333/user/logout",
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        })
-        .then((response) => {
-          Alert.alert("You have been logged out");
-          this.props.navigation.navigate('Login')
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      }
+      //   return fetch("http://10.0.2.2:3333/user/logout",
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //   })
+      //   .then((response) => {
+      //     Alert.alert("You have been logged out");
+      //     this.props.navigation.navigate('Login')
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
+      // }
 
 
       logoutUser = async () =>
       {
         let token = await AsyncStorage.getItem('@session_token');
         await AsyncStorage.removeItem('@session_token');
+        await AsyncStorage.removeItem('@user_id');
         return fetch("http://10.0.2.2:3333/api/1.0.0/user/logout",
         {
           method: 'POST',
@@ -42,9 +43,13 @@ class Main extends Component{
           {
             this.props.navigation.navigate('Login');
           }
+          else if(response.status === 401)
+          {
+            throw 'Unauthorized';
+          }
           else
           {
-            throw 'error';
+            throw 'Error';
           }
         })
       }
