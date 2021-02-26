@@ -6,6 +6,7 @@ class MyReviews extends Component{
   constructor(props) {
     super(props);
     this.state = {
+      idInp: '',
       LocationData: []
     };
   }
@@ -54,17 +55,18 @@ class MyReviews extends Component{
     this.displayLocation()
   }
 
-  writereview()
+  writereview = async(idInp) =>
   {
+    await AsyncStorage.setItem('@location_id',idInp+'');
     this.props.navigation.navigate('ReviewNav');
-    this.props.navigation.navigate('Write');
   }
 
-  editreview()
-  {
-    this.props.navigation.navigate('ReviewNav');
-    this.props.navigation.navigate('Edit');
-  }
+  // editreview = async(idInp) =>
+  // {
+  //   await AsyncStorage.setItem('@location_id',idInp+'');
+  //   this.props.navigation.navigate('ReviewNav');
+  //   this.props.navigation.navigate('Edit');
+  // }
 
 
 
@@ -79,13 +81,13 @@ return(
               <View>
                 <Text>{item.location_name}</Text>
                 <Button 
-                  onPress={() => this.writereview()}
+                  onPress={() => this.writereview(item.location_id)}
                   title="Write a review"
                 />
-                <Button 
-                  onPress={() => this.editreview()}
+                {/* <Button 
+                  onPress={() => this.editreview(item.location_id)}
                   title="Edit a review"
-                />
+                /> */}
               </View>
             
             )}
