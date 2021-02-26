@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button,AsyncStorage } from 'react-native';
+import { Text, View, Button,AsyncStorage,Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 class WriteReview extends Component{
@@ -111,7 +111,7 @@ class WriteReview extends Component{
                 </TextInput>
                 <Button 
                     onPress={() => this.addReview()}
-                    title="Create User"
+                    title="Add Review"
                 />
                 <Button 
                   onPress={() => this.props.navigation.navigate('Edit')}
