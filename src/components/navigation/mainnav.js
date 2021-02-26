@@ -7,6 +7,7 @@ import Main from '../screens/main.js';
 import MyReviews from '../screens/myreviews.js';
 import Reviews from '../screens/reviews.js';
 import Profile from '../screens/profile.js';
+import ReviewNav from '../navigation/reviewnav.js';
 
 
 const Tab = createBottomTabNavigator();
@@ -19,12 +20,12 @@ class MainNav extends Component
 
         
     return (
-
           <Tab.Navigator>
               <Tab.Screen name = "Main" component = {Main} /> 
               <Tab.Screen name = "MyReviews" component = {MyReviews} />
               <Tab.Screen name = "Reviews" component = {Reviews} />
               <Tab.Screen name = "Profile" component = {Profile} />
+              <Tab.Screen name  = "ReviewNav" component = {ReviewNav} />
           </Tab.Navigator>
     );  
     }

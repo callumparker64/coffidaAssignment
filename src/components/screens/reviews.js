@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, Alert,FlatList,AsyncStorage } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 class Reviews extends Component{
@@ -7,49 +7,70 @@ class Reviews extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          email: '',
-          password: ''
+          LocationData: []
         };
       }
 
-      logoutUser(){
 
-        return fetch("http://10.0.2.2:3333/user/logout",
+
+
+      displayLocation = async() =>{
+        let token = await AsyncStorage.getItem('@session_token');
+        return fetch("http://10.0.2.2:3333/api/1.0.0/find/",
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'GET',
+          headers: { 
+            'Content-Type': 'application/json',
+            "X-Authorization": token
+          },
         })
         .then((response) => {
-          Alert.alert("You have been logged out");
-          this.props.navigation.navigate('Login')
+          if(response.status === 200)
+          {
+            return response.json()
+          }
+          else if(response.status === 401)
+          {
+            throw 'Not Authorized';
+          }
+          else if(response.status === 404)
+          {
+            throw 'Location Not found';
+          }
+          else
+          {
+            throw 'Error';
+          }
+        })
+        .then((responseJson) => {
+          console.log(responseJson);
+          this.setState({LocationData: responseJson,});
         })
         .catch((error) => {
           console.error(error);
         });
       }
 
+      componentDidMount(){
+        this.displayLocation()
+      }
+
+
   render(){
 
     
     return(
         <View>
-            <Text>Reviews</Text>
-            <TextInput 
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(email) => this.setState({email})}
-                value={this.state.email}> 
-            </TextInput>
+              <FlatList
+                data={this.state.LocationData}
+                renderItem={({item}) =>(
+                  <View>
+                    <Text>{item.location_name}</Text>
+                  </View>
 
-            <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(password) => this.setState({password})}
-                secureTextEntry={true}
-                value={this.state.password}> 
-            </TextInput>
-
-            <Button 
-                onPress={() => this.logoutUser()}
-                title="Go Back"
-            />
+                )}
+                keyExtractor={(item,index) => item.id}
+              />
         </View>
     );
   }
